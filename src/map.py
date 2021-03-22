@@ -61,11 +61,10 @@ with zipfile.ZipFile(args.input_path) as archive:
                 # search hashtags
                 for hashtag in hashtags:
                     lang = tweet['lang']
-                    place = tweet['place']
-                    if 'country_code' in place:
-                        country = place['country_code']
+                    if tweeet['place'] != None and tweet['place']['country_code'] != None:
+                        country = tweeet['place']['country_code']
                     else:
-                        country = 'None'
+                        country = 'Unknown'
                     if hashtag in text:
                         counter_lang[hashtag][lang] += 1
                         counter_country[hashtag][country] += 1
@@ -87,4 +86,3 @@ with open(output_path_lang, 'w') as f:
     f.write(json.dumps(counter_lang))
 with open(output_path_country, 'w') as f:
     f.write(json.dumps(counter_country))
-
